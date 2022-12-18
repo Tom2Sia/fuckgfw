@@ -1,37 +1,31 @@
 #!/bin/bash
 # trojan-go 安装脚本
 #Wget https://github.com/p4gefau1t/trojan-go/releases/download/v0.10.6/trojan-go-linux-amd64.zip
-#unzip -o trojan-go-linux-amd64.zip -d /usr/local/bin/trojan-go
+#unzip -o trojan-go-linux-amd64.zip -d /etc/trojan-go
+#cp /etc/trojan-go/trojan-go /usr/bin/trojan-go
+#cp /etc/trojan-go/example/trojan-go.service /etc/systemd/system/
 #rm trojan-go-linux-amd64.zip
-colorEcho() {
-    echo -e "${1}${@:2}${PLAIN}"
-}
-BLUE="\033[36m" 
-RED="\033[31m"      # Error message
-echo ""
+#systemctl enable trojan-go
+
+
+
 while true
 do
     read -p " 请输入伪装域名：" DOMAIN
     if [[ -z "${DOMAIN}" ]]; then
-        echo -e " ${RED}伪装域名输入错误，请重新输入！${PLAIN}"
+        echo -e "伪装域名输入错误，请重新输入！"
     else
         break
     fi
 done
-colorEcho $BLUE " 伪装域名(host)：$DOMAIN"
 
-
-
-
-
+echo " 伪装域名(host)：$DOMAIN"
 
 read -p " 请设置trojan-go密码（不输则随机生成）:" PASSWORD
     [[ -z "$PASSWORD" ]] && PASSWORD=`cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 16 | head -n 1`
-    colorEcho "\033[36m" " trojan-go密码：$PASSWORD"
+Echo "trojan-go密码：$PASSWORD"
 
 
-
-echo ""
 while true
 do
     read -p " 请输入伪装路径，以/开头(不懂请直接回车)：" WSPATH
@@ -48,14 +42,13 @@ do
         break
     fi
 done
-echo ""
-colorEcho $BLUE " ws路径：$WSPATH"
+Echo " ws路径：$WSPATH"
 
 
 
 mkdir -p /etc/trojan-go
 
-cat > /etc/trojan-go/config.json <<-EOF
+cat > /etc/trojan-go/config.json<<-EOF
 {
     "run_type": "server",
     "local_addr": "::",
