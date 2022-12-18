@@ -1,29 +1,22 @@
 #!/bin/bash
-# trojan-go 安装脚本
-#Wget https://github.com/p4gefau1t/trojan-go/releases/download/v0.10.6/trojan-go-linux-amd64.zip
-#unzip -o trojan-go-linux-amd64.zip -d /etc/trojan-go
-#cp /etc/trojan-go/trojan-go /usr/bin/trojan-go
-#cp /etc/trojan-go/example/trojan-go.service /etc/systemd/system/
-#rm trojan-go-linux-amd64.zip
-#systemctl enable trojan-go
+# trojan-go 安装脚本,精简了很多，变得更加易读和修改
+apt install zip -y
+wget https://github.com/p4gefau1t/trojan-go/releases/download/v0.10.6/trojan-go-linux-amd64.zip
+unzip -o trojan-go-linux-amd64.zip -d /etc/trojan-go
+cp /etc/trojan-go/trojan-go /usr/bin/trojan-go
+cp /etc/trojan-go/example/trojan-go.service /etc/systemd/system/
+rm trojan-go-linux-amd64.zip
+systemctl enable trojan-go
 
 
+#读取设置
 
-while true
-do
-    read -p " 请输入伪装域名：" DOMAIN
-    if [[ -z "${DOMAIN}" ]]; then
-        echo -e "伪装域名输入错误，请重新输入！"
-    else
-        break
-    fi
-done
-
+read -p " 请输入伪装域名：" DOMAIN   #确保自己输入正确，错误了怨自己
 echo " 伪装域名(host)：$DOMAIN"
 
 read -p " 请设置trojan-go密码（不输则随机生成）:" PASSWORD
     [[ -z "$PASSWORD" ]] && PASSWORD=`cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 16 | head -n 1`
-Echo "trojan-go密码：$PASSWORD"
+echo "trojan-go密码：$PASSWORD"
 
 
 while true
@@ -42,12 +35,12 @@ do
         break
     fi
 done
-Echo " ws路径：$WSPATH"
+echo "websocket路径:$WSPATH"
 
 
 
 mkdir -p /etc/trojan-go
-
+#以下为写入配置文件
 cat > /etc/trojan-go/config.json<<-EOF
 {
     "run_type": "server",
@@ -99,3 +92,5 @@ cat > /etc/trojan-go/config.json<<-EOF
 }
 EOF
 
+systemctl restart trojan-go
+systemctl status trojan-go
