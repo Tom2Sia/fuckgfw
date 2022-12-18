@@ -6,11 +6,11 @@ apt install curl -y
 curl  https://get.acme.sh | sh
 
 source ~/.bashrc
-DOMAIN="litenodes.xyz"                        #泛域名证书必须使用dns方式申请
+DOMAIN="example.xyz"                        #泛域名证书必须使用dns方式申请
 export CF_Token="xxxxxxxxxxxxxxxxxxxxxxxxxx"  #cloudflare的token
 export CF_Account_ID="xxxxxxxxxxxxxxxx"       #cloudflare的账户ID
 export CF_Zone_ID="xxxxxxxxxxxxxx"            #cloudflare的区域ID
 /root/.acme.sh/acme.sh --issue --force --dns dns_cf --dnssleep 10 -d "*.$DOMAIN" --server  letsencrypt
-/root/.acme.sh/acme.sh --issue --force --dns dns_cf --dnssleep 10 -d "*.litenodes.xyz" --server  letsencrypt
+/root/.acme.sh/acme.sh --issue --force --dns dns_cf --dnssleep 10 -d "*.example.xyz" --server  letsencrypt
 echo "证书如果申请成功，将保存在/root/.acme.sh/下，使用trojan-go安装脚本将直接使用该证书，不再移动......"
 #acme会自动更新证书，但trojan-go还不能自动重启，后面再增加这个功能
