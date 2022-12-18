@@ -17,9 +17,9 @@ func main() {
         panic(err)
     }
     exPath := filepath.Dir(ex)
-    fmt.Println("webroot:" + exPath + "/html/")
-    fmt.Println("nohup ./webserver > logfile.txt & echo $! > pidfile.txt")
-    fmt.Println("kill -9 `cat pidfile.txt`")
+    fmt.Println("网站路径:" + exPath + "/html/")
+    fmt.Println("运行服务：nohup ./webserver > logfile.txt & echo $! > pidfile.txt")
+    fmt.Println("结束进程：kill -9 `cat pidfile.txt`")
     http.Handle("/", http.FileServer(http.Dir(exPath + "/html/")))
     http.ListenAndServe(":80", nil)
 }
