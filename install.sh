@@ -5,6 +5,10 @@ wget https://github.com/p4gefau1t/trojan-go/releases/download/v0.10.6/trojan-go-
 unzip -o trojan-go-linux-amd64.zip -d /etc/trojan-go
 cp /etc/trojan-go/trojan-go /usr/bin/trojan-go
 cp /etc/trojan-go/example/trojan-go.service /etc/systemd/system/
+
+sed -i '/User=nobody/d' /etc/systemd/system/trojan-go.service
+systemctl daemon-reload
+
 rm trojan-go-linux-amd64.zip
 systemctl enable trojan-go
 #读取设置
