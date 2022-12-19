@@ -11,8 +11,8 @@
     ],
     "ssl": {
         "verify-hostname": false,
-        "cert": "/root/.acme.sh/*.litenodes.xyz/fullchain.cer",
-        "key": "/root/.acme.sh/*.litenodes.xyz/*.litenodes.xyz.key"
+        "cert": "example.xyz/fullchain.cer",
+        "key": "example.xyz/*.example.xyz.key"
     },
     "tcp": {
     "no_delay": true,
