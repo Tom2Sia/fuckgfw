@@ -43,45 +43,32 @@ cat > /etc/trojan-go/config.json<<-EOF
     "local_port": 443,
     "remote_addr": "127.0.0.1",
     "remote_port": 80,
+    "disable_http_check": true,
+    "log_level":3,
     "password": [
         "$PASSWORD"
     ],
     "ssl": {
         "cert": "/root/.acme.sh/*.$DOMAIN/fullchain.cer",
         "key": "/root/.acme.sh/*.$DOMAIN/*.$DOMAIN.key",
-        "sni": "*.$DOMAIN",
         "alpn": [
             "http/1.1"
-        ],
-        "session_ticket": true,
-        "reuse_session": true,
-        "fallback_addr": "127.0.0.1",
-        "fallback_port": 80
+        ]
     },
     "tcp": {
-        "no_delay": true,
-        "keep_alive": true,
-        "prefer_ipv4": false
+    "no_delay": true,
+    "keep_alive": true,
+    "reuse_port": true,
+    "prefer_ipv4": false,
+    "fast_open": true,
+    "fast_open_qlen": 20
     },
     "mux": {
         "enabled": true
     },
     "websocket": {
         "enabled": true,
-        "path": "$WSPATH",
-        "hostname": "$DOMAIN",
-        "obfuscation_password": "",
-        "ssl": {
-          "verify": true,
-          "verify_hostname": true,
-          "cert": "/root/.acme.sh/*.$DOMAIN/fullchain.cer",
-          "key": "/root/.acme.sh/*.$DOMAIN/*.$DOMAIN.key",
-          "sni": "*.$DOMAIN",
-          "key_password": "",
-          "prefer_server_cipher": false,
-          "session_ticket": true,
-          "reuse_session": true,
-          "plain_http_response": ""
+        "path": "$WSPATH"
         }
     }
 }
